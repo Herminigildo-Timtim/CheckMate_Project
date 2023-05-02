@@ -7,30 +7,6 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="444dp"
-        android:layout_height="556dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="412dp"
-        android:rotation="126"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/design_edges2" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="444dp"
-        android:layout_height="556dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginBottom="416dp"
-        android:rotation="-46"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/design_edges2" />
-
-    <ImageView
         android:id="@+id/imageView8"
         android:layout_width="275dp"
         android:layout_height="579dp"
