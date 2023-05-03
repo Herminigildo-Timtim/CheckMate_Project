@@ -47,7 +47,7 @@
         android:layout_height="51dp"
         android:layout_margin="15dp"
         android:background="@drawable/edt_background"
-        android:drawableLeft="@drawable/baseline_person_24"
+        android:drawableLeft="@drawable/baseline_key_24"
         android:drawablePadding="10dp"
         android:inputType="textPassword"
         android:paddingLeft="10dp"
