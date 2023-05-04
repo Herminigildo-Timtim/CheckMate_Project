@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/SCREEN"
     tools:context=".Register">
 
     <Button
@@ -49,7 +50,9 @@
         android:id="@+id/switch2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dark"
+        android:checked="false"
+        android:text="Light"
+        style="@style/TEXT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.958"
@@ -62,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign up"
-        android:textColor="@color/black"
+        style="@style/TEXT"
         android:textSize="24dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -129,8 +132,8 @@
         android:id="@+id/button14"
         android:layout_width="280dp"
         android:layout_height="55dp"
-        android:backgroundTint="@color/black"
         android:text="Sign up"
+        style="@style/BUTTON"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.48"
@@ -156,7 +159,7 @@
         app:layout_constraintVertical_bias="0.526" />
 
     <EditText
-        android:id="@+id/editTextTextPassword4"
+        android:id="@+id/editText4"
         android:layout_width="300dp"
         android:layout_height="51dp"
         android:layout_margin="15dp"
@@ -193,8 +196,8 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="291dp"
         android:layout_marginBottom="658dp"
-        android:backgroundTint="@color/black"
         android:text="Back"
+        style="@style/BUTTON"
         android:textSize="20px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

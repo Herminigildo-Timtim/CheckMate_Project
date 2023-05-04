@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,33 +38,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
         //Light mode is the default mode
         night = sharedPreferences.getBoolean("night",false);
+        switcher.setChecked(night);
+
+        Drawable drawable,drawable1;
 
         if(night){
             switcher.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             editText.setBackgroundResource(R.drawable.edt_backgroundwhite);
             editTextPassword.setBackgroundResource(R.drawable.edt_backgroundwhite);
+            drawable = getResources().getDrawable(R.drawable.baseline_person_24_white,null);
+            drawable1 = getResources().getDrawable(R.drawable.baseline_key_24_white,null);
+            switcher.setText("Dark");
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            drawable1.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            editText.setCompoundDrawables(drawable, null, null, null);
+            editTextPassword.setCompoundDrawables(drawable1,null,null,null);
         }
 
-        switcher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(night){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor = sharedPreferences.edit();
-                    editor.putBoolean("night",false);
-                    editText.setBackgroundResource(R.drawable.edt_background);
-                    editTextPassword.setBackgroundResource(R.drawable.edt_background);
-                }else{
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor = sharedPreferences.edit();
-                    editor.putBoolean("night",true);
-                    editText.setBackgroundResource(R.drawable.edt_background);
-                    editTextPassword.setBackgroundResource(R.drawable.edt_background);
+
+            switcher.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Drawable drawable,drawable1;
+                    if(night){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        editor = sharedPreferences.edit();
+                        editor.putBoolean("night",false);
+                        drawable = getResources().getDrawable(R.drawable.baseline_person_24,null);
+                        drawable1 = getResources().getDrawable(R.drawable.baseline_key_24,null);
+                        editText.setBackgroundResource(R.drawable.edt_background);
+                        editTextPassword.setBackgroundResource(R.drawable.edt_background);
+                    }else{
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        editor = sharedPreferences.edit();
+                        editor.putBoolean("night",true);
+                        drawable = getResources().getDrawable(R.drawable.baseline_person_24_white,null);
+                        drawable1 = getResources().getDrawable(R.drawable.baseline_key_24_white,null);
+                        switcher.setText("Dark");
+                        editText.setBackgroundResource(R.drawable.edt_background);
+                        editTextPassword.setBackgroundResource(R.drawable.edt_background);
+
+                    }
+                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                    drawable1.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                    editText.setCompoundDrawables(drawable, null, null, null);
+                    editTextPassword.setCompoundDrawables(drawable1,null,null,null);
+                    editor.putBoolean("switch_state", switcher.isChecked());
+                    editor.apply();
                 }
-                editor.apply();
-            }
-        });
+            });
     }
 
 
@@ -71,10 +95,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.button7:
-                Toast.makeText(MainActivity.this,"Sign Up button is clicked!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Sign Up button is clicked!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, Register.class);
-                startActivity(intent);
+                intent.putExtra("switch_state", switcher.isChecked());
+                startActivityForResult(intent, 1);
                 break;
+        }
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                boolean switchState = data.getBooleanExtra("switch_state", false);
+                switcher.setChecked(switchState);
+            }
         }
     }
 }
