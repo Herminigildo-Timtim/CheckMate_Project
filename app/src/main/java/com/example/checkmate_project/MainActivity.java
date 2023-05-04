@@ -12,13 +12,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnSignUp,btn2,btn3,btn4,btn5;
+    Button btnSignUp,btnRed,btnBlue,btn4,btn5;
     Switch switcher;
     boolean night;
+    boolean redTheme;
+    boolean blueTheme;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     @Override
@@ -28,7 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         btnSignUp = (Button)findViewById(R.id.button7);
+        btnRed = (Button)findViewById(R.id.button4);
+        btnBlue = (Button)findViewById(R.id.button6);
         btnSignUp.setOnClickListener(this);
+        btnRed.setOnClickListener(this);
+        btnBlue.setOnClickListener(this);
 
         getSupportActionBar().hide();
         switcher = findViewById(R.id.switch1);
@@ -37,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //To save mode after exiting from the program
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
         //Light mode is the default mode
+        blueTheme = sharedPreferences.getBoolean("blue_theme", false);
+        redTheme = sharedPreferences.getBoolean("red_theme", false);
         night = sharedPreferences.getBoolean("night",false);
         switcher.setChecked(night);
 
@@ -54,6 +63,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawable1.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
             editText.setCompoundDrawables(drawable, null, null, null);
             editTextPassword.setCompoundDrawables(drawable1,null,null,null);
+        }
+
+        if (redTheme) {
+            applyRedTheme();
+        }
+        if(blueTheme){
+            applyBlueTheme();
         }
 
 
@@ -93,12 +109,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.button7:
                 Toast.makeText(MainActivity.this, "Sign Up button is clicked!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, Register.class);
                 intent.putExtra("switch_state", switcher.isChecked());
+                intent.putExtra("red_theme", true);
+                intent.putExtra("blue_theme", true);
+                // Add this line to pass the red theme state
                 startActivityForResult(intent, 1);
+                break;
+            case R.id.button4:
+
+                applyRedTheme();
+                redTheme = true;
+                editor = sharedPreferences.edit();
+                editor.putBoolean("red_theme", redTheme);
+                editor.apply();
+                break;
+
+            case R.id.button6:
+                applyBlueTheme();
+                blueTheme = true;
+                editor = sharedPreferences.edit();
+                editor.putBoolean("blue_theme", blueTheme);
+                editor.apply();
                 break;
         }
     }
@@ -110,5 +145,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switcher.setChecked(switchState);
             }
         }
+    }
+    private void applyRedTheme() {
+        // Your red theme application code here
+        final EditText editText = findViewById(R.id.editText);
+        final EditText editTextPassword = findViewById(R.id.editTextTextPassword);
+        final Button button1 = findViewById(R.id.button);
+        final Button button2 = findViewById(R.id.button7);
+        final Switch switch1 = findViewById(R.id.switch1);
+
+
+        Drawable drawable, drawable1;
+        Toast.makeText(MainActivity.this, "Red Theme!", Toast.LENGTH_SHORT).show();
+        editText.setBackgroundResource(R.drawable.edt_backgroundred); // Create a new drawable for the red background
+        editTextPassword.setBackgroundResource(R.drawable.edt_backgroundred); // Create a new drawable for the red background
+
+        drawable = getResources().getDrawable(R.drawable.baseline_person_24_red, null); // Create a new drawable for the red person icon
+        drawable1 = getResources().getDrawable(R.drawable.baseline_key_24_red, null); // Create a new drawable for the red key icon
+
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable1.setBounds(0, 0, drawable1.getIntrinsicWidth(), drawable1.getIntrinsicHeight());
+        editText.setCompoundDrawables(drawable, null, null, null);
+        editTextPassword.setCompoundDrawables(drawable1, null, null, null);
+        button1.setBackgroundColor(getResources().getColor(R.color.red, null));
+        button2.setBackgroundColor(getResources().getColor(R.color.red, null));
+        switch1.setTextColor(getResources().getColor(R.color.red, null));
+    }
+    private void applyBlueTheme(){
+        final EditText editText = findViewById(R.id.editText);
+        final EditText editTextPassword = findViewById(R.id.editTextTextPassword);
+        final Button button1 = findViewById(R.id.button);
+        final Button button2 = findViewById(R.id.button7);
+        final Switch switch1 = findViewById(R.id.switch1);
+
+
+        Drawable drawable, drawable1;
+        Toast.makeText(MainActivity.this, "Blue Theme!", Toast.LENGTH_SHORT).show();
+        editText.setBackgroundResource(R.drawable.edt_backgroundblue); // Create a new drawable for the red background
+        editTextPassword.setBackgroundResource(R.drawable.edt_backgroundblue); // Create a new drawable for the red background
+
+        drawable = getResources().getDrawable(R.drawable.baseline_person_24_blue, null); // Create a new drawable for the red person icon
+        drawable1 = getResources().getDrawable(R.drawable.baseline_key_24_blue, null); // Create a new drawable for the red key icon
+
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable1.setBounds(0, 0, drawable1.getIntrinsicWidth(), drawable1.getIntrinsicHeight());
+        editText.setCompoundDrawables(drawable, null, null, null);
+        editTextPassword.setCompoundDrawables(drawable1, null, null, null);
+        button1.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
+        button2.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
+        switch1.setTextColor(getResources().getColor(R.color.skyblue, null));
     }
 }

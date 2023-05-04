@@ -32,8 +32,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
 
         // Find the switch view in the second activity
         boolean switchState = getIntent().getBooleanExtra("switch_state", false);
+        boolean redTheme = getIntent().getBooleanExtra("red_theme", false);
+        boolean blueTheme = getIntent().getBooleanExtra("blue_theme",false);
         switcher = findViewById(R.id.switch2); // Replace "switch2" with the id of the switch in the second activity
         switcher.setChecked(switchState);
+
 
         // Retrieve the saved state of the switch button
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
@@ -71,6 +74,19 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             editText2.setCompoundDrawables(drawable2, null, null, null);
             editTextPassword2.setCompoundDrawables(drawable3, null, null, null);
             editText3.setCompoundDrawables(drawable4,null,null,null);
+        }
+
+        if (redTheme) {
+            applyRedTheme();
+            editor = sharedPreferences.edit();
+            editor.putBoolean("red_theme", redTheme);
+            editor.apply();
+        }
+        if(blueTheme){
+            applyRedTheme();
+            editor = sharedPreferences.edit();
+            editor.putBoolean("red_theme", redTheme);
+            editor.apply();
         }
 
 
@@ -123,6 +139,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                 editor.apply();
             }
         });
+        if (redTheme) {
+            applyRedTheme();
+        }
+        if(blueTheme){
+            applyBlueTheme();
+        }
     }
 
 
@@ -139,5 +161,44 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                 break;
         }
 
+    }
+
+    private void applyRedTheme() {
+        final EditText editText = findViewById(R.id.editText2);
+        final EditText editTextPassword = findViewById(R.id.editTextTextPassword2);
+        final EditText editText2 = findViewById(R.id.editText3);
+        final EditText editTextPassword2 = findViewById(R.id.editTextTextPassword3);
+        final EditText editText3 = findViewById(R.id.editText4);
+        final Button button1 = findViewById(R.id.button2);
+        final Button button2 = findViewById(R.id.button14);
+        final Switch switch1 = findViewById(R.id.switch2);
+
+        editText.setBackgroundResource(R.drawable.edt_backgroundred);
+        editTextPassword.setBackgroundResource(R.drawable.edt_backgroundred);
+        editText2.setBackgroundResource(R.drawable.edt_backgroundred);
+        editTextPassword2.setBackgroundResource(R.drawable.edt_backgroundred);
+        editText3.setBackgroundResource(R.drawable.edt_backgroundred);
+        button1.setBackgroundColor(getResources().getColor(R.color.red, null));
+        button2.setBackgroundColor(getResources().getColor(R.color.red, null));
+        switch1.setTextColor(getResources().getColor(R.color.red, null));
+    }
+    private void applyBlueTheme(){
+        final EditText editText = findViewById(R.id.editText2);
+        final EditText editTextPassword = findViewById(R.id.editTextTextPassword2);
+        final EditText editText2 = findViewById(R.id.editText3);
+        final EditText editTextPassword2 = findViewById(R.id.editTextTextPassword3);
+        final EditText editText3 = findViewById(R.id.editText4);
+        final Button button1 = findViewById(R.id.button2);
+        final Button button2 = findViewById(R.id.button14);
+        final Switch switch1 = findViewById(R.id.switch2);
+
+        editText.setBackgroundResource(R.drawable.edt_backgroundblue);
+        editTextPassword.setBackgroundResource(R.drawable.edt_backgroundblue);
+        editText2.setBackgroundResource(R.drawable.edt_backgroundblue);
+        editTextPassword2.setBackgroundResource(R.drawable.edt_backgroundblue);
+        editText3.setBackgroundResource(R.drawable.edt_backgroundblue);
+        button1.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
+        button2.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
+        switch1.setTextColor(getResources().getColor(R.color.skyblue, null));
     }
 }

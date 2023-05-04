@@ -170,6 +170,19 @@
         app:layout_constraintVertical_bias="0.132" />
 
     <Button
+        android:id="@+id/button3"
+        android:layout_width="67dp"
+        android:layout_height="29dp"
+        android:backgroundTint="@color/grey"
+        android:text=" ."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.959"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.162" />
+
+    <Button
         android:id="@+id/button5"
         android:layout_width="67dp"
         android:layout_height="27dp"
