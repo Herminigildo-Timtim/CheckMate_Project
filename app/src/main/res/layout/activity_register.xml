@@ -163,7 +163,7 @@
         android:background="@drawable/edt_background"
         android:drawableLeft="@drawable/baseline_date_range_24"
         android:drawablePadding="10dp"
-        android:hint="mm / dd / yy"
+        android:hint="mm / dd / year"
         android:inputType="text"
         android:paddingLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
