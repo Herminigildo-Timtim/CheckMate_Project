@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             applyBlueTheme();
         }else if(greenTheme){
             applyGreenTheme();
+        }else{
+            resetToDefaultTheme();
         }
 
         Drawable drawable,drawable1;
@@ -95,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             applyBlueTheme();
         }else if(greenTheme){
             applyGreenTheme();
+        }else{
+            resetToDefaultTheme();
         }
 
 
@@ -235,6 +239,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     applyBlueTheme();
                 }else if(greenTheme){
                     applyGreenTheme();
+                }else{
+                    resetToDefaultTheme();
                 }
             }
         }

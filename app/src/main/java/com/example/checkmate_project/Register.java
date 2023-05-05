@@ -110,6 +110,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             applyBlueTheme();
         }else if(greenTheme){
             applyGreenTheme();
+        }else{
+            resetToDefaultTheme();
         }
 
         switcher.setOnClickListener(new View.OnClickListener() {
@@ -293,7 +295,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                 editor.putBoolean("red_theme", redTheme);
                 editor.putBoolean("blue_theme", blueTheme);
                 editor.putBoolean("green_theme", greenTheme);
-                editor.putBoolean("white_theme", defaultTheme);
+                editor.putBoolean("default_theme", defaultTheme);
                 editor.apply();
                 break;
         }
