@@ -78,16 +78,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
 
         if (redTheme) {
             applyRedTheme();
-            editor = sharedPreferences.edit();
-            editor.putBoolean("red_theme", redTheme);
-            editor.apply();
         }
-        if(blueTheme){
-            applyRedTheme();
-            editor = sharedPreferences.edit();
-            editor.putBoolean("red_theme", redTheme);
-            editor.apply();
+        if(blueTheme) {
+            applyBlueTheme();
         }
+
 
 
         switcher.setOnClickListener(new View.OnClickListener() {

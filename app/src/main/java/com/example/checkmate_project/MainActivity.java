@@ -49,6 +49,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         night = sharedPreferences.getBoolean("night",false);
         switcher.setChecked(night);
 
+        // Check and apply the stored themes
+        if (redTheme) {
+            applyRedTheme();
+        } else if (blueTheme) {
+            applyBlueTheme();
+        }
+
         Drawable drawable,drawable1;
 
         if(night){
@@ -63,47 +70,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawable1.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
             editText.setCompoundDrawables(drawable, null, null, null);
             editTextPassword.setCompoundDrawables(drawable1,null,null,null);
-        }
 
+        }
         if (redTheme) {
             applyRedTheme();
-        }
-        if(blueTheme){
+        } else if (blueTheme) {
             applyBlueTheme();
         }
 
 
-            switcher.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Drawable drawable,drawable1;
-                    if(night){
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        editor = sharedPreferences.edit();
-                        editor.putBoolean("night",false);
-                        drawable = getResources().getDrawable(R.drawable.baseline_person_24,null);
-                        drawable1 = getResources().getDrawable(R.drawable.baseline_key_24,null);
-                        editText.setBackgroundResource(R.drawable.edt_background);
-                        editTextPassword.setBackgroundResource(R.drawable.edt_background);
-                    }else{
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        editor = sharedPreferences.edit();
-                        editor.putBoolean("night",true);
-                        drawable = getResources().getDrawable(R.drawable.baseline_person_24_white,null);
-                        drawable1 = getResources().getDrawable(R.drawable.baseline_key_24_white,null);
-                        switcher.setText("Dark");
-                        editText.setBackgroundResource(R.drawable.edt_background);
-                        editTextPassword.setBackgroundResource(R.drawable.edt_background);
+
+
+        switcher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Drawable drawable,drawable1;
+                if(night){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    editor = sharedPreferences.edit();
+                    editor.putBoolean("night",false);
+                    drawable = getResources().getDrawable(R.drawable.baseline_person_24,null);
+                    drawable1 = getResources().getDrawable(R.drawable.baseline_key_24,null);
+                    editText.setBackgroundResource(R.drawable.edt_background);
+                    editTextPassword.setBackgroundResource(R.drawable.edt_background);
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    editor = sharedPreferences.edit();
+                    editor.putBoolean("night",true);
+                    drawable = getResources().getDrawable(R.drawable.baseline_person_24_white,null);
+                    drawable1 = getResources().getDrawable(R.drawable.baseline_key_24_white,null);
+                    switcher.setText("Dark");
+                    editText.setBackgroundResource(R.drawable.edt_background);
+                    editTextPassword.setBackgroundResource(R.drawable.edt_background);
 
                     }
-                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                    drawable1.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                    editText.setCompoundDrawables(drawable, null, null, null);
-                    editTextPassword.setCompoundDrawables(drawable1,null,null,null);
-                    editor.putBoolean("switch_state", switcher.isChecked());
-                    editor.apply();
-                }
-            });
+                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                drawable1.setBounds(0, 0, drawable1.getIntrinsicWidth(), drawable1.getIntrinsicHeight());
+                editText.setCompoundDrawables(drawable, null, null, null);
+                editTextPassword.setCompoundDrawables(drawable1, null, null, null);
+                editor.putBoolean("switch_state", switcher.isChecked());
+                editor.apply();
+
+            }
+        });
     }
 
 
@@ -114,8 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, "Sign Up button is clicked!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, Register.class);
                 intent.putExtra("switch_state", switcher.isChecked());
-                intent.putExtra("red_theme", true);
-                intent.putExtra("blue_theme", true);
+                intent.putExtra("red_theme", redTheme);
+                intent.putExtra("blue_theme", blueTheme);
                 // Add this line to pass the red theme state
                 startActivityForResult(intent, 1);
                 break;
@@ -123,16 +132,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 applyRedTheme();
                 redTheme = true;
+                blueTheme = false;
                 editor = sharedPreferences.edit();
                 editor.putBoolean("red_theme", redTheme);
+                editor.putBoolean("blue_theme", blueTheme);
                 editor.apply();
                 break;
 
             case R.id.button6:
                 applyBlueTheme();
                 blueTheme = true;
+                redTheme = false;
                 editor = sharedPreferences.edit();
                 editor.putBoolean("blue_theme", blueTheme);
+                editor.putBoolean("red_theme", redTheme);
                 editor.apply();
                 break;
         }
@@ -143,6 +156,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 boolean switchState = data.getBooleanExtra("switch_state", false);
                 switcher.setChecked(switchState);
+
+                // Receive the theme state from Register
+                redTheme = data.getBooleanExtra("red_theme", false);
+                blueTheme = data.getBooleanExtra("blue_theme", false);
+
+                // Apply the theme based on the received values
+                if (redTheme) {
+                    applyRedTheme();
+                } else if (blueTheme) {
+                    applyBlueTheme();
+                }
             }
         }
     }
