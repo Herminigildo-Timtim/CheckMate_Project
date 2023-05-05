@@ -3,6 +3,7 @@ package com.example.checkmate_project;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,13 +11,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class Register extends AppCompatActivity implements View.OnClickListener{
 
-    Button btnBack, btnRedTheme, btnBlueTheme,btnGreenTheme,btnDefaultTheme;
+    Button btnBack, btnRedTheme, btnBlueTheme,btnGreenTheme,btnDefaultTheme, btnCalendar , btnSignup;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Switch switcher;
@@ -30,6 +34,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
 
         btnBack = findViewById(R.id.button2);
         btnBack.setOnClickListener(this);
+
+        btnSignup = findViewById(R.id.button14);
+        btnSignup.setOnClickListener(this);
+
+        btnCalendar = findViewById(R.id.button8);
+        btnCalendar.setOnClickListener(this);
 
         btnRedTheme = findViewById(R.id.button10);
         btnRedTheme.setOnClickListener(this);
@@ -147,6 +157,73 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             }
         });
 
+
+
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the current date to set as the default date in the DatePickerDialog
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                // Create a new DatePickerDialog instance with the current date as default date
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Register.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                // Set the chosen date in the EditText
+                                String date = (month + 1) + " / " + dayOfMonth + " / " + year;
+                                editText3.setText(date);
+                            }
+                        }, year, month, day);
+
+                // Show the DatePickerDialog
+                datePickerDialog.show();
+            }
+        });
+
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.button14:
+                        // Get the name and password from the EditText fields
+                        String name = editText.getText().toString().trim();
+                        String password = editTextPassword.getText().toString().trim();
+
+                        // Check if name and password are valid
+                        if (name.isEmpty() || password.isEmpty()) {
+                            Toast.makeText(Register.this, "Please enter a name and password", Toast.LENGTH_SHORT).show();
+                        } else {
+                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("name", name);
+                            editor.putString("password", password);
+                            editor.apply();
+
+                            // Pass the name and password to the main activity
+                            Intent intent = new Intent();
+                            intent.putExtra("name", name);
+                            intent.putExtra("password", password);
+                            intent.putExtra("switch_state", switcher.isChecked());
+                            intent.putExtra("red_theme", redTheme);
+                            intent.putExtra("blue_theme", blueTheme);
+                            intent.putExtra("green_theme", greenTheme);
+                            intent.putExtra("default_theme", defaultTheme);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+
+                        // Save the name and password to SharedPreferences
+                        break;
+                }
+            }
+        });
+
+
+
     }
 
 
@@ -231,7 +308,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         final Button button1 = findViewById(R.id.button2);
         final Button button2 = findViewById(R.id.button14);
         final Switch switch1 = findViewById(R.id.switch2);
-        Toast.makeText(Register.this, "Red Theme!", Toast.LENGTH_SHORT).show();
+
 
         editText.setBackgroundResource(R.drawable.edt_backgroundred);
         editTextPassword.setBackgroundResource(R.drawable.edt_backgroundred);
@@ -241,6 +318,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         button1.setBackgroundColor(getResources().getColor(R.color.red, null));
         button2.setBackgroundColor(getResources().getColor(R.color.red, null));
         switch1.setTextColor(getResources().getColor(R.color.red, null));
+        button1.setTextColor(getResources().getColor(R.color.white, null));
+        button2.setTextColor(getResources().getColor(R.color.white, null));
     }
     private void applyBlueTheme(){
         final EditText editText = findViewById(R.id.editText2);
@@ -251,7 +330,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         final Button button1 = findViewById(R.id.button2);
         final Button button2 = findViewById(R.id.button14);
         final Switch switch1 = findViewById(R.id.switch2);
-        Toast.makeText(Register.this, "Blue Theme!", Toast.LENGTH_SHORT).show();
+
 
         editText.setBackgroundResource(R.drawable.edt_backgroundblue);
         editTextPassword.setBackgroundResource(R.drawable.edt_backgroundblue);
@@ -261,6 +340,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         button1.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
         button2.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
         switch1.setTextColor(getResources().getColor(R.color.skyblue, null));
+        button1.setTextColor(getResources().getColor(R.color.white, null));
+        button2.setTextColor(getResources().getColor(R.color.white, null));
     }
     private void applyGreenTheme(){
         final EditText editText = findViewById(R.id.editText2);
@@ -271,7 +352,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         final Button button1 = findViewById(R.id.button2);
         final Button button2 = findViewById(R.id.button14);
         final Switch switch1 = findViewById(R.id.switch2);
-        Toast.makeText(Register.this, "Green Theme!", Toast.LENGTH_SHORT).show();
+
 
         editText.setBackgroundResource(R.drawable.edt_backgroundgreen);
         editTextPassword.setBackgroundResource(R.drawable.edt_backgroundgreen);
@@ -281,6 +362,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         button1.setBackgroundColor(getResources().getColor(R.color.green, null));
         button2.setBackgroundColor(getResources().getColor(R.color.green, null));
         switch1.setTextColor(getResources().getColor(R.color.green, null));
+        button1.setTextColor(getResources().getColor(R.color.white, null));
+        button2.setTextColor(getResources().getColor(R.color.white, null));
     }
 
     private void resetToDefaultTheme (){
@@ -292,7 +375,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         final Button button1 = findViewById(R.id.button2);
         final Button button2 = findViewById(R.id.button14);
         final Switch switch1 = findViewById(R.id.switch2);
-        Toast.makeText(Register.this, "Default Theme!", Toast.LENGTH_SHORT).show();
+
 
         if(night){
             editText.setBackgroundResource(R.drawable.edt_backgroundwhite);
@@ -305,6 +388,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             button1.setBackgroundColor(getResources().getColor(android.R.color.white, null));
             button2.setBackgroundColor(getResources().getColor(android.R.color.white, null));
             switch1.setTextColor(getResources().getColor(android.R.color.white, null));
+            button1.setTextColor(getResources().getColor(R.color.black, null));
+            button2.setTextColor(getResources().getColor(R.color.black, null));
         }else{
             editText.setBackgroundResource(R.drawable.edt_background);
             editText2.setBackgroundResource(R.drawable.edt_background);
@@ -316,6 +401,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             button1.setBackgroundColor(getResources().getColor(android.R.color.black, null));
             button2.setBackgroundColor(getResources().getColor(android.R.color.black, null));
             switch1.setTextColor(getResources().getColor(android.R.color.black, null));
+            button1.setTextColor(getResources().getColor(R.color.white, null));
+            button2.setTextColor(getResources().getColor(R.color.white, null));
         }
     }
 

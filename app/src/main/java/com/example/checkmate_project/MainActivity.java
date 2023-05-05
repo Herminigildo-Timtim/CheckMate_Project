@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnGreen.setOnClickListener(this);
         btnDefault.setOnClickListener(this);
 
+        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String name = sharedPreferences.getString("name", "");
+        String password = sharedPreferences.getString("password", "");
 
         getSupportActionBar().hide();
         switcher = findViewById(R.id.switch1);
@@ -214,6 +218,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 greenTheme = data.getBooleanExtra("green_theme", false);
                 defaultTheme = data.getBooleanExtra("default_theme", false);
 
+                String name = data.getStringExtra("name");
+                String password = data.getStringExtra("password");
+
+                // Print the name and password in the EditText fields
+                EditText editTextName = findViewById(R.id.editText);
+                EditText editTextPassword = findViewById(R.id.editTextTextPassword);
+                editTextName.setText(name);
+                editTextPassword.setText(password);
+
+
                 // Apply the theme based on the received values
                 if (redTheme) {
                     applyRedTheme();
@@ -235,13 +249,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Drawable drawable, drawable1;
-        Toast.makeText(MainActivity.this, "Red Theme!", Toast.LENGTH_SHORT).show();
+
         editText.setBackgroundResource(R.drawable.edt_backgroundred); // Create a new drawable for the red background
         editTextPassword.setBackgroundResource(R.drawable.edt_backgroundred); // Create a new drawable for the red background
 
         button1.setBackgroundColor(getResources().getColor(R.color.red, null));
         button2.setBackgroundColor(getResources().getColor(R.color.red, null));
         switch1.setTextColor(getResources().getColor(R.color.red, null));
+        button1.setTextColor(getResources().getColor(R.color.white, null));
+        button2.setTextColor(getResources().getColor(R.color.white, null));
     }
     private void applyBlueTheme(){
         final EditText editText = findViewById(R.id.editText);
@@ -252,12 +268,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Drawable drawable, drawable1;
-        Toast.makeText(MainActivity.this, "Blue Theme!", Toast.LENGTH_SHORT).show();
+
         editText.setBackgroundResource(R.drawable.edt_backgroundblue); // Create a new drawable for the red background
         editTextPassword.setBackgroundResource(R.drawable.edt_backgroundblue); // Create a new drawable for the red background
         button1.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
         button2.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
         switch1.setTextColor(getResources().getColor(R.color.skyblue, null));
+        button1.setTextColor(getResources().getColor(R.color.white, null));
+        button2.setTextColor(getResources().getColor(R.color.white, null));
+
     }
     private void applyGreenTheme() {
         // Your red theme application code here
@@ -269,13 +288,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Drawable drawable, drawable1;
-        Toast.makeText(MainActivity.this, "Green Theme!", Toast.LENGTH_SHORT).show();
+
         editText.setBackgroundResource(R.drawable.edt_backgroundgreen); // Create a new drawable for the red background
         editTextPassword.setBackgroundResource(R.drawable.edt_backgroundgreen); // Create a new drawable for the red background
 
         button1.setBackgroundColor(getResources().getColor(R.color.green, null));
         button2.setBackgroundColor(getResources().getColor(R.color.green, null));
         switch1.setTextColor(getResources().getColor(R.color.green, null));
+        button1.setTextColor(getResources().getColor(R.color.white, null));
+        button2.setTextColor(getResources().getColor(R.color.white, null));
     }
 
     private void resetToDefaultTheme() {
@@ -284,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final Button button1 = findViewById(R.id.button);
         final Button button2 = findViewById(R.id.button7);
         final Switch switch1 = findViewById(R.id.switch1);
-        Toast.makeText(MainActivity.this, "Default Theme!", Toast.LENGTH_SHORT).show();
+
 
         if (night) {
             editText.setBackgroundResource(R.drawable.edt_backgroundwhite);
@@ -292,14 +313,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch1.setTextColor(getResources().getColor(android.R.color.white, null));
             button1.setBackgroundColor(getResources().getColor(android.R.color.white, null));
             button2.setBackgroundColor(getResources().getColor(android.R.color.white, null));
+            button1.setTextColor(getResources().getColor(R.color.black, null));
+            button2.setTextColor(getResources().getColor(R.color.black, null));
         } else {
             editText.setBackgroundResource(R.drawable.edt_background);
             editTextPassword.setBackgroundResource(R.drawable.edt_background);
             switch1.setTextColor(getResources().getColor(android.R.color.black, null));
             button1.setTextAppearance(this, R.style.BUTTON);
             button2.setTextAppearance(this, R.style.BUTTON);
+
             button1.setBackgroundColor(getResources().getColor(android.R.color.black, null));
             button2.setBackgroundColor(getResources().getColor(android.R.color.black, null));
+            button1.setTextColor(getResources().getColor(R.color.white, null));
+            button2.setTextColor(getResources().getColor(R.color.white, null));
         }
     }
 
