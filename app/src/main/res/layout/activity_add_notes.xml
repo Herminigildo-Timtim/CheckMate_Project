@@ -22,45 +22,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
         android:layout_margin="10dp"
-        android:background="@drawable/square_shape">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/title"
-            android:hint="Title"
-            style="@style/EDIT"
-            android:padding="10dp"
-            android:layout_margin="10dp"/>
+        android:background="@drawable/square_shape"
+        android:orientation="vertical"
+        android:padding="10dp">
+
         <EditText
             android:id="@+id/description"
+            style="@style/EDIT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description"
-            style="@style/EDIT"
-            android:padding="10dp"
             android:layout_margin="10dp"
+            android:gravity="top"
+            android:hint="Note"
             android:lines="10"
-            android:gravity="top"/>
+            android:padding="10dp" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/button16"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Save"
-        android:layout_gravity="center"
-        style="@style/BUTTON"/>
-    <Button
         android:id="@+id/button17"
-        android:layout_width="200dp"
+        style="@style/BUTTON"
+        android:layout_width="250dp"
         android:layout_height="50dp"
-        android:text="Back"
         android:layout_gravity="center"
-        style="@style/BUTTON"/>
+        android:text="Back" />
+
+    <Button
+        android:id="@+id/button16"
+        style="@style/BUTTON"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="Save" />
 
 
 </LinearLayout>

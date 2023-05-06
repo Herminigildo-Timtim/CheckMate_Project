@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +23,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
     BottomNavigationView bottomNavigationView;
 
+    private static final int REQUEST_CODE_HOME = 2;
+
     Button btnRedTheme, btnBlueTheme,btnGreenTheme,btnDefaultTheme;
-    Button btnGoal,btnBack,btnEvent,btnHobby;
+    Button btnGoal,btnBack,btnEvent,btnHobby,btnGoal1,btnEvent1,btnHobby1;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Switch switcher;
@@ -33,11 +38,27 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        EditText titleEditText1 = findViewById(R.id.title);
+        EditText titleEditText2 = findViewById(R.id.title1);
+        EditText titleEditText3 = findViewById(R.id.title2);
+        String name = getIntent().getStringExtra("name");
+        titleEditText1.setText("@"+name);
+        titleEditText2.setText("@"+name);
+        titleEditText3.setText("@"+name);
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         btnGoal = (Button) findViewById(R.id.add);
         btnEvent = (Button) findViewById(R.id.add2);
         btnHobby = (Button) findViewById(R.id.add3);
+        btnGoal1 = (Button) findViewById(R.id.button24);
+        btnEvent1 = (Button) findViewById(R.id.button27);
+        btnHobby1 = (Button) findViewById(R.id.button28);
+        btnGoal1.setEnabled(false);
+        btnEvent1.setEnabled(false);
+        btnHobby1.setEnabled(false);
         btnBack = (Button)findViewById(R.id.button22);
+
+
 
 
         bottomNavigationView.setBackground(null);
@@ -48,6 +69,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         btnEvent.setOnClickListener(this);
         btnHobby.setOnClickListener(this);
         btnBack.setOnClickListener(this);
+
 
         btnRedTheme = findViewById(R.id.button21);
         btnRedTheme.setOnClickListener(this);
@@ -109,6 +131,71 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         });
 
 
+
+        btnGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, AddNotes.class);
+                intent.putExtra("button_id", "goal");
+                startActivityForResult(intent, REQUEST_CODE_HOME);
+            }
+        });
+        btnEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, AddNotes.class);
+                intent.putExtra("button_id", "event");
+                startActivityForResult(intent, REQUEST_CODE_HOME);
+            }
+        });
+
+        btnHobby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, AddNotes.class);
+                intent.putExtra("button_id", "hobby");
+                startActivityForResult(intent, REQUEST_CODE_HOME);
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_HOME && resultCode == RESULT_OK) {
+            String description = data.getStringExtra("description");
+            String time = data.getStringExtra("time");
+            String buttonId = data.getStringExtra("button_id");
+
+            EditText goalEditText = findViewById(R.id.goal);
+            EditText eventEditText = findViewById(R.id.event);
+            EditText hobbyEditText = findViewById(R.id.hobby);
+
+            String timeText = "(" + time + ")";
+            SpannableString spannableTimeText = new SpannableString(timeText);
+            spannableTimeText.setSpan(new RelativeSizeSpan(0.7f), 0, timeText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            switch (buttonId) {
+                case "goal":
+                    goalEditText.setText(description);
+                    goalEditText.append("\n");
+                    goalEditText.append(spannableTimeText);
+                    break;
+                case "event":
+                    eventEditText.setText(description);
+                    eventEditText.append("\n");
+                    eventEditText.append(spannableTimeText);
+                    break;
+                case "hobby":
+                    hobbyEditText.setText(description);
+                    hobbyEditText.append("\n");
+                    hobbyEditText.append(spannableTimeText);
+                    break;
+            }
+        }
     }
 
     @Override

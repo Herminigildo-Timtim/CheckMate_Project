@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int REQUEST_CODE_REGISTER = 1;
     private static final int REQUEST_CODE_HOME = 2;
     Button btnSignUp,btnRed,btnBlue,btnGreen,btnDefault, btnLogin;
+
     Switch switcher;
     boolean night;
     boolean redTheme;
@@ -145,8 +146,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Home.class);
-                startActivityForResult(intent, REQUEST_CODE_HOME);
+                // Get the name and password from the EditText fields
+                String name = editText.getText().toString().trim();
+                String password = editTextPassword.getText().toString().trim();
+
+                // Check if name and password are not empty
+                if (!name.isEmpty() && !password.isEmpty()) {
+                    Intent homeIntent = new Intent(MainActivity.this, Home.class);
+                    homeIntent.putExtra("name", name);
+                    startActivityForResult(homeIntent, REQUEST_CODE_HOME);
+                } else {
+                    Toast.makeText(MainActivity.this, "Please enter both name and password", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

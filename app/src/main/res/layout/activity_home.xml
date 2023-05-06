@@ -145,7 +145,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Name"
-                android:padding="5dp" />
+                android:padding="5dp"
+                android:editable="false"/>
 
             <EditText
                 android:id="@+id/hobby"
@@ -156,7 +157,8 @@
                 android:gravity="top"
                 android:hint="Add Hobby"
                 android:lines="3"
-                android:padding="5dp" />
+                android:padding="5dp" android:editable="false"
+                />
 
         </LinearLayout>
 
@@ -233,7 +235,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Name"
-                android:padding="5dp" />
+                android:padding="5dp"
+                android:editable="false"/>
 
             <EditText
                 android:id="@+id/event"
@@ -244,7 +247,8 @@
                 android:gravity="top"
                 android:hint="Add Event"
                 android:lines="3"
-                android:padding="5dp" />
+                android:padding="5dp"
+                android:editable="false"/>
 
         </LinearLayout>
 
@@ -269,7 +273,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Name"
-                android:padding="5dp" />
+                android:padding="5dp"
+                android:editable="false"/>
 
             <EditText
                 android:id="@+id/goal"
@@ -280,7 +285,8 @@
                 android:gravity="top"
                 android:hint="Add goal"
                 android:lines="3"
-                android:padding="5dp" />
+                android:padding="5dp"
+                android:editable="false"/>
 
         </LinearLayout>
 
