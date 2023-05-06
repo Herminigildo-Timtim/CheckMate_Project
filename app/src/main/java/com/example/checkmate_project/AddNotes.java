@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -33,6 +34,11 @@ public class AddNotes extends AppCompatActivity {
             public void onClick(View v) {
                 String description = descriptionEditText.getText().toString();
                 String time = DateFormat.getTimeInstance().format(new Date());
+
+                if (description.isEmpty()) {
+                    Toast.makeText(AddNotes.this, "Please input a description", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("description", description);

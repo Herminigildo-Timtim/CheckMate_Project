@@ -1,9 +1,11 @@
 package com.example.checkmate_project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +50,34 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         titleEditText3.setText("@"+name);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.miHome:
+                        // Handle home button click
+                        if(!(Home.this instanceof Home)){
+                            Intent intent = new Intent(Home.this,Home.class);
+                            startActivity(intent);
+                            Toast.makeText(Home.this,"Home",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(Home.this,"You are already in home page",Toast.LENGTH_SHORT).show();
+                        }
+
+                        break;
+                    case R.id.miNote:
+                        // Handle note button click
+
+                    case R.id.miTask:
+                        // Handle task button click
+
+                    case R.id.miProfile:
+                        // Handle profile button click
+
+                }
+                return true;
+            }
+        });
         btnGoal = (Button) findViewById(R.id.add);
         btnEvent = (Button) findViewById(R.id.add2);
         btnHobby = (Button) findViewById(R.id.add3);
@@ -111,6 +142,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         }else{
             resetToDefaultTheme();
         }
+
 
         switcher.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,17 +212,17 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
             switch (buttonId) {
                 case "goal":
-                    goalEditText.setText(description);
+                    goalEditText.setText("\"" + description + "\"");
                     goalEditText.append("\n");
                     goalEditText.append(spannableTimeText);
                     break;
                 case "event":
-                    eventEditText.setText(description);
+                    eventEditText.setText("\"" + description + "\"");
                     eventEditText.append("\n");
                     eventEditText.append(spannableTimeText);
                     break;
                 case "hobby":
-                    hobbyEditText.setText(description);
+                    hobbyEditText.setText("\"" + description + "\"");
                     hobbyEditText.append("\n");
                     hobbyEditText.append(spannableTimeText);
                     break;
