@@ -29,4 +29,14 @@
         <item name="android:backgroundTint">@color/white</item>
         <item name="android:textColor">#000</item>
     </style>
+
+    <style name="BUTTON_ADD">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:src">@drawable/baseline_add_24</item>
+    </style>
+
+    <style name="EDIT">
+        <item name="android:background">#30000000</item>
+    </style>
 </resources>

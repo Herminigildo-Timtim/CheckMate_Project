@@ -189,15 +189,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.button14:
                         // Get the name and password from the EditText fields
                         String name = editText.getText().toString().trim();
                         String password = editTextPassword.getText().toString().trim();
+                        String confirm = editTextPassword2.getText().toString().trim();
+                        String email = editText2.getText().toString().trim();
+                        String birth = editText3.getText().toString().trim();
 
                         // Check if name and password are valid
-                        if (name.isEmpty() || password.isEmpty()) {
-                            Toast.makeText(Register.this, "Please enter a name and password", Toast.LENGTH_SHORT).show();
+                        if (name.isEmpty() || password.isEmpty() || confirm.isEmpty() || email.isEmpty() || birth.isEmpty()) {
+                            Toast.makeText(Register.this, "Please fill all required inputs", Toast.LENGTH_SHORT).show();
                         } else {
                             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -219,8 +220,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                         }
 
                         // Save the name and password to SharedPreferences
-                        break;
-                }
             }
         });
 

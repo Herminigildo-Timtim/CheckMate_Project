@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnSignUp,btnRed,btnBlue,btnGreen,btnDefault;
+    private static final int REQUEST_CODE_REGISTER = 1;
+    private static final int REQUEST_CODE_HOME = 2;
+    Button btnSignUp,btnRed,btnBlue,btnGreen,btnDefault, btnLogin;
     Switch switcher;
     boolean night;
     boolean redTheme;
@@ -35,11 +37,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 
+
+
         btnSignUp = (Button)findViewById(R.id.button7);
         btnRed = (Button)findViewById(R.id.button4);
         btnBlue = (Button)findViewById(R.id.button6);
         btnGreen = (Button)findViewById(R.id.button5);
         btnDefault = (Button)findViewById(R.id.button3);
+        btnLogin = (Button)findViewById(R.id.button1);
         btnSignUp.setOnClickListener(this);
         btnRed.setOnClickListener(this);
         btnBlue.setOnClickListener(this);
@@ -136,6 +141,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Home.class);
+                startActivityForResult(intent, REQUEST_CODE_HOME);
+            }
+        });
     }
 
 
@@ -209,47 +222,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
+
+        if (requestCode == REQUEST_CODE_REGISTER && resultCode == RESULT_OK) {
+            boolean switchState = data.getBooleanExtra("switch_state", false);
+            switcher.setChecked(switchState);
+
+            // Receive the theme state from Register
+            redTheme = data.getBooleanExtra("red_theme", false);
+            blueTheme = data.getBooleanExtra("blue_theme", false);
+            greenTheme = data.getBooleanExtra("green_theme", false);
+            defaultTheme = data.getBooleanExtra("default_theme", false);
+
+            String name = data.getStringExtra("name");
+            String password = data.getStringExtra("password");
+
+            // Print the name and password in the EditText fields
+            EditText editTextName = findViewById(R.id.editText);
+            EditText editTextPassword = findViewById(R.id.editTextTextPassword);
+            editTextName.setText(name);
+            editTextPassword.setText(password);
+
+            // Apply the theme based on the received values
+            if (redTheme) {
+                applyRedTheme();
+            } else if (blueTheme) {
+                applyBlueTheme();
+            } else if (greenTheme) {
+                applyGreenTheme();
+            } else {
+                resetToDefaultTheme();
+            }
+        } else if (requestCode == REQUEST_CODE_HOME && resultCode == RESULT_OK) {
+            if (data != null) {
                 boolean switchState = data.getBooleanExtra("switch_state", false);
                 switcher.setChecked(switchState);
 
-                // Receive the theme state from Register
                 redTheme = data.getBooleanExtra("red_theme", false);
                 blueTheme = data.getBooleanExtra("blue_theme", false);
                 greenTheme = data.getBooleanExtra("green_theme", false);
                 defaultTheme = data.getBooleanExtra("default_theme", false);
-
-                String name = data.getStringExtra("name");
-                String password = data.getStringExtra("password");
-
-                // Print the name and password in the EditText fields
-                EditText editTextName = findViewById(R.id.editText);
-                EditText editTextPassword = findViewById(R.id.editTextTextPassword);
-                editTextName.setText(name);
-                editTextPassword.setText(password);
-
 
                 // Apply the theme based on the received values
                 if (redTheme) {
                     applyRedTheme();
                 } else if (blueTheme) {
                     applyBlueTheme();
-                }else if(greenTheme){
+                } else if (greenTheme) {
                     applyGreenTheme();
-                }else{
+                } else {
                     resetToDefaultTheme();
                 }
             }
         }
     }
+
     private void applyRedTheme() {
         // Your red theme application code here
         final EditText editText = findViewById(R.id.editText);
         final EditText editTextPassword = findViewById(R.id.editTextTextPassword);
-        final Button button1 = findViewById(R.id.button);
+        final Button button1 = findViewById(R.id.button1);
         final Button button2 = findViewById(R.id.button7);
         final Switch switch1 = findViewById(R.id.switch1);
 
@@ -268,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void applyBlueTheme(){
         final EditText editText = findViewById(R.id.editText);
         final EditText editTextPassword = findViewById(R.id.editTextTextPassword);
-        final Button button1 = findViewById(R.id.button);
+        final Button button1 = findViewById(R.id.button1);
         final Button button2 = findViewById(R.id.button7);
         final Switch switch1 = findViewById(R.id.switch1);
 
@@ -288,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Your red theme application code here
         final EditText editText = findViewById(R.id.editText);
         final EditText editTextPassword = findViewById(R.id.editTextTextPassword);
-        final Button button1 = findViewById(R.id.button);
+        final Button button1 = findViewById(R.id.button1);
         final Button button2 = findViewById(R.id.button7);
         final Switch switch1 = findViewById(R.id.switch1);
 
@@ -308,7 +342,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void resetToDefaultTheme() {
         final EditText editText = findViewById(R.id.editText);
         final EditText editTextPassword = findViewById(R.id.editTextTextPassword);
-        final Button button1 = findViewById(R.id.button);
+        final Button button1 = findViewById(R.id.button1);
         final Button button2 = findViewById(R.id.button7);
         final Switch switch1 = findViewById(R.id.switch1);
 

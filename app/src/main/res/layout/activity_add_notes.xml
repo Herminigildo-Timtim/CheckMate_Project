@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddNotes">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addnote"
+        android:text="Add Note"
+        style="@style/TEXT"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_margin="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/square_shape">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/title"
+            android:hint="Title"
+            style="@style/EDIT"
+            android:padding="10dp"
+            android:layout_margin="10dp"/>
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            style="@style/EDIT"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:lines="10"
+            android:gravity="top"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Save"
+        android:layout_gravity="center"
+        style="@style/BUTTON"/>
+    <Button
+        android:id="@+id/button17"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Back"
+        android:layout_gravity="center"
+        style="@style/BUTTON"/>
+
+
+</LinearLayout>
