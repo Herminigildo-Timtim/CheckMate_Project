@@ -6,15 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".AddNotes">
-
-
+    tools:context=".AddNoteActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/addnote"
-        android:text="ADD NOTE"
+        android:id="@+id/titletextview"
+        android:text="ADD A NEW TASK"
         style="@style/TEXT"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -29,35 +27,43 @@
         android:backgroundTint="#B2B2B2"
         android:layout_margin="10dp"
         android:background="@drawable/rounded_corner">
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/description"
+            android:id="@+id/titleinput"
+            android:hint="Task"
+            style="@style/EDIT"
+            android:padding="10dp"
+            android:layout_margin="10dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/descriptioninput"
             android:hint="Decription"
             style="@style/EDIT"
             android:padding="10dp"
             android:layout_margin="10dp"
             android:lines="10"
             android:gravity="top"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/timerinput"
+            android:inputType="number"
+            android:hint="Timer (seconds)"
+            style="@style/EDIT"
+            android:padding="10dp"
+            android:layout_margin="10dp"/>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button17"
-        style="@style/BUTTON"
+    <com.google.android.material.button.MaterialButton
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:id="@+id/savebtn"
+        android:text="SAVE NOTE"
         android:layout_gravity="center"
-        android:text="Back" />
-
-    <Button
-        android:id="@+id/button16"
-        style="@style/BUTTON"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:text="Save" />
+        style="@style/BUTTON" />
 
 
 </LinearLayout>

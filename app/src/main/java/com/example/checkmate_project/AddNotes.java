@@ -18,7 +18,7 @@ public class AddNotes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_notes);
-
+        getSupportActionBar().hide();
         EditText description = findViewById(R.id.description);
         Button save = (Button) findViewById(R.id.button16);
         Button back = (Button)findViewById(R.id.button17);

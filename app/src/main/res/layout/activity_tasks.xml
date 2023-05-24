@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="393dp"
+        android:layout_height="80dp"
+        android:id="@+id/idToolbar"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+
+            <Button
+                android:id="@+id/button22"
+                style="@style/BUTTON"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="3dp"
+                android:text="Back"
+                android:textSize="25px" />
+
+            <Button
+                android:id="@+id/button21"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@id/button22"
+                android:backgroundTint="@color/red"
+                android:text=" ." />
+
+            <Button
+                android:id="@+id/button20"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="-2dp"
+                android:layout_toEndOf="@id/button21"
+                android:backgroundTint="@color/green"
+                android:text=" ." />
+
+            <Button
+                android:id="@+id/button19"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="-1dp"
+                android:layout_toEndOf="@id/button20"
+                android:backgroundTint="@color/skyblue"
+                android:text=" ." />
+
+            <Button
+                android:id="@+id/button18"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="-1dp"
+                android:layout_toEndOf="@id/button19"
+                android:backgroundTint="@color/grey"
+                android:text=" ." />
+
+            <Switch
+                android:id="@+id/switch3"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@id/button18"
+                android:checked="false"
+                android:text="Light" />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="397dp"
+        android:layout_height="490dp"
+        android:layout_above="@id/addnewnotebtn"
+        android:layout_below="@id/idToolbar"
+        android:layout_marginBottom="1dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addnewnotebtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="6dp"
+        style="@style/BUTTON"
+        android:text="ADD NEW TASK"
+        />
+
+
+</RelativeLayout>

@@ -32,6 +32,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        getSupportActionBar().hide();
+
         btnBack = findViewById(R.id.button2);
         btnBack.setOnClickListener(this);
 
@@ -222,13 +224,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                         // Save the name and password to SharedPreferences
             }
         });
-
-
-
     }
-
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

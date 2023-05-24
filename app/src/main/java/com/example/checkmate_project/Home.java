@@ -24,12 +24,14 @@ import android.widget.Toast;
 
 public class Home extends AppCompatActivity implements View.OnClickListener {
 
-    BottomNavigationView bottomNavigationView;
 
     private static final int REQUEST_CODE_HOME = 2;
 
     Button btnRedTheme, btnBlueTheme,btnGreenTheme,btnDefaultTheme;
     Button btnGoal,btnBack,btnEvent,btnHobby,btnGoal1,btnEvent1,btnHobby1;
+    Button btnHome,btnProfile,btnNote,btnTask;
+
+    String name;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Switch switcher;
@@ -44,61 +46,37 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         EditText titleEditText1 = findViewById(R.id.title);
         EditText titleEditText2 = findViewById(R.id.title1);
         EditText titleEditText3 = findViewById(R.id.title2);
-        String name = getIntent().getStringExtra("name");
+        name = getIntent().getStringExtra("name");
         titleEditText1.setText("@"+name);
         titleEditText2.setText("@"+name);
         titleEditText3.setText("@"+name);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.miHome:
-                        // Handle home button click
-                        if(!(Home.this instanceof Home)){
-                            Intent intent = new Intent(Home.this,Home.class);
-                            startActivity(intent);
-                            Toast.makeText(Home.this,"Home",Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(Home.this,"You are already in home page",Toast.LENGTH_SHORT).show();
-                        }
-
-                        break;
-                    case R.id.miNote:
-                        // Handle note button click
-
-                    case R.id.miTask:
-                        // Handle task button click
-
-                    case R.id.miProfile:
-                        // Handle profile button click
-
-                }
-                return true;
-            }
-        });
+        btnHome = (Button)findViewById(R.id.button33);
+        btnProfile = (Button)findViewById(R.id.button42);
+        btnTask = (Button)findViewById(R.id.button41);
+        btnNote = (Button)findViewById(R.id.button40);
         btnGoal = (Button) findViewById(R.id.add);
         btnEvent = (Button) findViewById(R.id.add2);
         btnHobby = (Button) findViewById(R.id.add3);
         btnGoal1 = (Button) findViewById(R.id.button24);
         btnEvent1 = (Button) findViewById(R.id.button27);
         btnHobby1 = (Button) findViewById(R.id.button28);
-        btnGoal1.setEnabled(false);
-        btnEvent1.setEnabled(false);
-        btnHobby1.setEnabled(false);
+
         btnBack = (Button)findViewById(R.id.button22);
 
 
 
-
-        bottomNavigationView.setBackground(null);
-        bottomNavigationView.getMenu().getItem(2).setEnabled(false);
-
         // Set the OnClickListener for the btnAdd button
+        btnHome.setOnClickListener(this);
+        btnProfile.setOnClickListener(this);
+        btnTask.setOnClickListener(this);
+        btnNote.setOnClickListener(this);
         btnGoal.setOnClickListener(this);
         btnEvent.setOnClickListener(this);
         btnHobby.setOnClickListener(this);
+        btnGoal1.setOnClickListener(this);
+        btnEvent1.setOnClickListener(this);
+        btnHobby1.setOnClickListener(this);
         btnBack.setOnClickListener(this);
 
 
@@ -109,8 +87,9 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         btnBlueTheme.setOnClickListener(this);
 
         btnGreenTheme = findViewById(R.id.button19);
-        btnDefaultTheme = findViewById(R.id.button18);
         btnGreenTheme.setOnClickListener(this);
+
+        btnDefaultTheme = findViewById(R.id.button18);
         btnDefaultTheme.setOnClickListener(this);
 
         // Find the switch view in the second activity
@@ -187,6 +166,29 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                 Intent intent = new Intent(Home.this, AddNotes.class);
                 intent.putExtra("button_id", "hobby");
                 startActivityForResult(intent, REQUEST_CODE_HOME);
+            }
+        });
+
+        btnGoal1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText goalEditText = findViewById(R.id.goal);
+                goalEditText.setText("");
+            }
+        });
+        btnEvent1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText eventEditText = findViewById(R.id.event);
+                eventEditText.setText("");
+            }
+        });
+
+        btnHobby1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText hobbyEditText = findViewById(R.id.hobby);
+                hobbyEditText.setText("");
             }
         });
 
@@ -303,7 +305,39 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                 editor.putBoolean("default_theme", defaultTheme);
                 editor.apply();
                 break;
+            case R.id.button33:
+                if (!isHomePage()) {
+                    Intent intent1 = new Intent(this, Home.class);
+                    startActivity(intent1);
+                } else {
+                    Toast.makeText(this, "This is already Home", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.button40:
+                //For Note class
+                Intent intent2 = new Intent(this,Notes.class);
+                intent2.putExtra("name", name);
+                startActivity(intent2);
+                Toast.makeText(this, "Notes", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.button41:
+                //For Task class
+                Intent intent3 = new Intent(this,Tasks.class);
+                intent3.putExtra("name", name);
+                startActivity(intent3);
+                Toast.makeText(this, "Tasks", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.button42:
+                Intent intent4 = new Intent(this,Profile.class);
+                intent4.putExtra("name", name);
+                startActivity(intent4);
+                Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
+                break;
         }
+    }
+
+    private boolean isHomePage() {
+        return this.getClass().getSimpleName().equals("Home");
     }
 
     private void applyRedTheme() {
@@ -315,6 +349,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         final Button button5 = findViewById(R.id.add2);
         final Button button6 = findViewById(R.id.button28);
         final Button button7 = findViewById(R.id.add3);
+        final Button button8 = findViewById(R.id.button33);
+        final Button button9 = findViewById(R.id.button42);
+        final Button button10 = findViewById(R.id.button41);
+        final Button button11 = findViewById(R.id.button40);
         final Switch switch1 = findViewById(R.id.switch3);
 
 
@@ -327,6 +365,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         button5.setBackgroundColor(getResources().getColor(R.color.red, null));
         button6.setBackgroundColor(getResources().getColor(R.color.red, null));
         button7.setBackgroundColor(getResources().getColor(R.color.red, null));
+        button8.setBackgroundColor(getResources().getColor(R.color.red, null));
+        button9.setBackgroundColor(getResources().getColor(R.color.red, null));
+        button10.setBackgroundColor(getResources().getColor(R.color.red, null));
+        button11.setBackgroundColor(getResources().getColor(R.color.red, null));
 
         switch1.setTextColor(getResources().getColor(R.color.red, null));
 
@@ -337,6 +379,11 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         button5.setTextColor(getResources().getColor(R.color.white, null));
         button6.setTextColor(getResources().getColor(R.color.white, null));
         button7.setTextColor(getResources().getColor(R.color.white, null));
+        button8.setTextColor(getResources().getColor(R.color.white, null));
+        button9.setTextColor(getResources().getColor(R.color.white, null));
+        button10.setTextColor(getResources().getColor(R.color.white, null));
+        button11.setTextColor(getResources().getColor(R.color.white, null));
+
     }
     private void applyBlueTheme(){
 
@@ -347,6 +394,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         final Button button5 = findViewById(R.id.add2);
         final Button button6 = findViewById(R.id.button28);
         final Button button7 = findViewById(R.id.add3);
+        final Button button8 = findViewById(R.id.button33);
+        final Button button9 = findViewById(R.id.button42);
+        final Button button10 = findViewById(R.id.button41);
+        final Button button11 = findViewById(R.id.button40);
         final Switch switch1 = findViewById(R.id.switch3);
 
 
@@ -358,6 +409,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         button5.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
         button6.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
         button7.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
+        button8.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
+        button9.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
+        button10.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
+        button11.setBackgroundColor(getResources().getColor(R.color.skyblue, null));
 
         switch1.setTextColor(getResources().getColor(R.color.skyblue, null));
 
@@ -368,6 +423,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         button5.setTextColor(getResources().getColor(R.color.white, null));
         button6.setTextColor(getResources().getColor(R.color.white, null));
         button7.setTextColor(getResources().getColor(R.color.white, null));
+        button8.setTextColor(getResources().getColor(R.color.white, null));
+        button9.setTextColor(getResources().getColor(R.color.white, null));
+        button10.setTextColor(getResources().getColor(R.color.white, null));
+        button11.setTextColor(getResources().getColor(R.color.white, null));
     }
     private void applyGreenTheme(){
 
@@ -378,6 +437,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         final Button button5 = findViewById(R.id.add2);
         final Button button6 = findViewById(R.id.button28);
         final Button button7 = findViewById(R.id.add3);
+        final Button button8 = findViewById(R.id.button33);
+        final Button button9 = findViewById(R.id.button42);
+        final Button button10 = findViewById(R.id.button41);
+        final Button button11 = findViewById(R.id.button40);
         final Switch switch1 = findViewById(R.id.switch3);
 
 
@@ -389,6 +452,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         button5.setBackgroundColor(getResources().getColor(R.color.green, null));
         button6.setBackgroundColor(getResources().getColor(R.color.green, null));
         button7.setBackgroundColor(getResources().getColor(R.color.green, null));
+        button8.setBackgroundColor(getResources().getColor(R.color.green, null));
+        button9.setBackgroundColor(getResources().getColor(R.color.green, null));
+        button10.setBackgroundColor(getResources().getColor(R.color.green, null));
+        button11.setBackgroundColor(getResources().getColor(R.color.green, null));
 
         switch1.setTextColor(getResources().getColor(R.color.green, null));
 
@@ -399,6 +466,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         button5.setTextColor(getResources().getColor(R.color.white, null));
         button6.setTextColor(getResources().getColor(R.color.white, null));
         button7.setTextColor(getResources().getColor(R.color.white, null));
+        button8.setTextColor(getResources().getColor(R.color.white, null));
+        button9.setTextColor(getResources().getColor(R.color.white, null));
+        button10.setTextColor(getResources().getColor(R.color.white, null));
+        button11.setTextColor(getResources().getColor(R.color.white, null));
     }
 
     private void resetToDefaultTheme (){
@@ -410,6 +481,11 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         final Button button5 = findViewById(R.id.add2);
         final Button button6 = findViewById(R.id.button28);
         final Button button7 = findViewById(R.id.add3);
+        final Button button8 = findViewById(R.id.button33);
+        final Button button9 = findViewById(R.id.button42);
+        final Button button10 = findViewById(R.id.button41);
+        final Button button11 = findViewById(R.id.button40);
+
         final Switch switch1 = findViewById(R.id.switch3);
 
 
@@ -430,6 +506,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             button5.setBackgroundColor(getResources().getColor(android.R.color.white, null));
             button6.setBackgroundColor(getResources().getColor(android.R.color.white, null));
             button7.setBackgroundColor(getResources().getColor(android.R.color.white, null));
+            button8.setBackgroundColor(getResources().getColor(android.R.color.white, null));
+            button9.setBackgroundColor(getResources().getColor(android.R.color.white, null));
+            button10.setBackgroundColor(getResources().getColor(android.R.color.white, null));
+            button11.setBackgroundColor(getResources().getColor(android.R.color.white, null));
 
             switch1.setTextColor(getResources().getColor(android.R.color.white, null));
 
@@ -440,6 +520,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             button5.setTextColor(getResources().getColor(R.color.black, null));
             button6.setTextColor(getResources().getColor(R.color.black, null));
             button7.setTextColor(getResources().getColor(R.color.black, null));
+            button8.setTextColor(getResources().getColor(R.color.black, null));
+            button9.setTextColor(getResources().getColor(R.color.black, null));
+            button10.setTextColor(getResources().getColor(R.color.black, null));
+            button11.setTextColor(getResources().getColor(R.color.black, null));
         }else{
 
             button1.setTextAppearance(this, R.style.BUTTON);
@@ -449,6 +533,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             button5.setTextAppearance(this, R.style.BUTTON);
             button6.setTextAppearance(this, R.style.BUTTON);
             button7.setTextAppearance(this, R.style.BUTTON);
+            button8.setTextAppearance(this, R.style.BUTTON);
+            button9.setTextAppearance(this, R.style.BUTTON);
+            button10.setTextAppearance(this, R.style.BUTTON);
+            button11.setTextAppearance(this, R.style.BUTTON);
 
             button1.setBackgroundColor(getResources().getColor(android.R.color.black, null));
             button2.setBackgroundColor(getResources().getColor(android.R.color.black, null));
@@ -457,6 +545,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             button5.setBackgroundColor(getResources().getColor(android.R.color.black, null));
             button6.setBackgroundColor(getResources().getColor(android.R.color.black, null));
             button7.setBackgroundColor(getResources().getColor(android.R.color.black, null));
+            button8.setBackgroundColor(getResources().getColor(android.R.color.black, null));
+            button9.setBackgroundColor(getResources().getColor(android.R.color.black, null));
+            button10.setBackgroundColor(getResources().getColor(android.R.color.black, null));
+            button11.setBackgroundColor(getResources().getColor(android.R.color.black, null));
 
             switch1.setTextColor(getResources().getColor(android.R.color.black, null));
 
@@ -467,6 +559,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
             button5.setTextColor(getResources().getColor(R.color.white, null));
             button6.setTextColor(getResources().getColor(R.color.white, null));
             button7.setTextColor(getResources().getColor(R.color.white, null));
+            button8.setTextColor(getResources().getColor(R.color.white, null));
+            button9.setTextColor(getResources().getColor(R.color.white, null));
+            button10.setTextColor(getResources().getColor(R.color.white, null));
+            button11.setTextColor(getResources().getColor(R.color.white, null));
         }
     }
 }
